@@ -11,7 +11,7 @@ animals_data = load_data('animals_data.json')
 for animal in animals_data:
     name = animal.get("name")
     diet = animal.get("characteristics").get("diet")
-    locations = animal.get("location")
+    locations = animal.get("locations")
     animal_type = animal.get("characteristics").get("type")
 
 
