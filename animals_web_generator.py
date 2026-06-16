@@ -8,4 +8,15 @@ def load_data(file_path):
 
 animals_data = load_data('animals_data.json')
 
-print(animals_data)
+for animal in animals_data:
+    name = animal.get("name")
+    diet = animal.get("characteristics").get("diet")
+    locations = animal.get("location")
+    animal_type = animal.get("characteristics").get("type")
+
+
+    print(name)
+    print(diet)
+    print(locations)
+    print(animal_type)
+
