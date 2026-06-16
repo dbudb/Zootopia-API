@@ -2,7 +2,7 @@ import json
 
 def load_data(file_path):
     """Loads a JSON file"""
-    with open(file_path, "r") as handle:
+    with open(file_path, "r", encoding="utf-8") as handle:
         return json.load(handle)
 
 
@@ -21,23 +21,24 @@ for animal in animals_data:
     print(f"Type: {animal_type}")
     print()
     selected_animal_data += "<li class='cards__item'>"
-    selected_animal_data += f"Name: {name}<br/>\n"
+    selected_animal_data += f"<div class='card__title'>{name}</div>"
+    selected_animal_data += f"<p class='card__text'>"
     if diet and diet != "None":
-        selected_animal_data += f"Diet: {diet}<br/>\n"
+        selected_animal_data += f"<strong>Diet:</strong> {diet}<br/>"
     if main_location and main_location != "None":
-        selected_animal_data += f"Location: {main_location}<br/>\n"
+        selected_animal_data += f"<strong>Location:</strong> {main_location}<br/>"
     if animal_type and animal_type != "None":
-        selected_animal_data += f"Type: {animal_type}<br/>\n"
-    selected_animal_data += "<br/></li>\n"
+        selected_animal_data += f"<strong>Type:</strong> {animal_type}<br/>"
+    selected_animal_data += "</p></li>"
 
 print(selected_animal_data)
 
-with open("animals_template.html", "r") as file:
+with open("animals_template.html", "r", encoding="utf-8") as file:
     html_template = file.read()
 
 html_filled = html_template.replace("__REPLACE_ANIMALS_INFO__", selected_animal_data)
 
-with open("animals.html", "w") as file:
+with open("animals.html", "w", encoding="utf-8") as file:
     file.write(html_filled)
 
 print(html_filled)
