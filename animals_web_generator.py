@@ -20,15 +20,15 @@ for animal in animals_data:
     print(f"Location: {main_location}")
     print(f"Type: {animal_type}")
     print()
-
-    selected_animal_data += f"Name: {name}\n"
+    selected_animal_data += "<li class='cards__item'>"
+    selected_animal_data += f"Name: {name}<br/>\n"
     if diet and diet != "None":
-        selected_animal_data += f"Diet: {diet}\n"
+        selected_animal_data += f"Diet: {diet}<br/>\n"
     if main_location and main_location != "None":
-        selected_animal_data += f"Location: {main_location}\n"
+        selected_animal_data += f"Location: {main_location}<br/>\n"
     if animal_type and animal_type != "None":
-        selected_animal_data += f"Type: {animal_type}\n"
-    selected_animal_data += "\n"
+        selected_animal_data += f"Type: {animal_type}<br/>\n"
+    selected_animal_data += "<br/></li>\n"
 
 print(selected_animal_data)
 
