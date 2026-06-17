@@ -20,34 +20,44 @@ def save_file(file_path: str, content: str) -> None:
         file.write(content)
 
 
-def serialize_output(animals):
+def serialize_output(animals: list[dict[str, Any]]) -> str:
+    """gets list of animal objects and returns html formatted str with only name, diet, location and type per animal"""
     selected_animal_data = ""
     for animal in animals:
         name = animal.get("name")
-        diet = animal.get("characteristics").get("diet")
+        characteristics = animal.get("characteristics", {})
+        diet = characteristics.get("diet")
+        animal_type = characteristics.get("type")
         locations = animal.get("locations")
-        main_location = locations[0]
-        animal_type = animal.get("characteristics").get("type")
+        main_location = locations[0] if locations else None
 
         selected_animal_data += "<li class='cards__item'>"
         selected_animal_data += f"<div class='card__title'>{name}</div>"
-        selected_animal_data += f"<p class='card__text'>"
+        selected_animal_data += "<p class='card__text'>"
 
-        if diet and diet != "None":
+        if diet:
             selected_animal_data += f"<strong>Diet:</strong> {diet}<br/>"
-        if main_location and main_location != "None":
+
+        if main_location:
             selected_animal_data += f"<strong>Location:</strong> {main_location}<br/>"
-        if animal_type and animal_type != "None":
+
+        if animal_type:
             selected_animal_data += f"<strong>Type:</strong> {animal_type}<br/>"
+
         selected_animal_data += "</p></li>"
     return selected_animal_data
 
+
 def main():
+    """loads information from a json file, loads a html template,
+    serializes the information, pastes into html and saves file
+    """
     animals_data = load_data("animals_data.json")
     html_template = load_template("animals_template.html")
     animals_html = serialize_output(animals_data)
     html_filled = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
     save_file("animals.html", html_filled)
+
 
 if __name__ == "__main__":
     main()
