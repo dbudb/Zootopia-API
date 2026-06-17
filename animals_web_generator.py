@@ -1,6 +1,8 @@
 import json
+from typing import Any
 
-def load_data(file_path: str) -> json:
+
+def load_data(file_path: str) -> Any:
     """Loads a JSON file"""
     with open(file_path, "r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -11,10 +13,13 @@ def load_template(file_path: str) -> str:
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
-def save_html(file_path: str, content: str) -> None:
-    with open("animals.html", "w", encoding="utf-8") as file:
-        file.write(html_filled)
 
+def save_html(file_path: str, content: str) -> None:
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.write(content)
+
+
+def serialize_output(animal):
 
 animals_data = load_data("animals_data.json")
 selected_animal_data = ""
