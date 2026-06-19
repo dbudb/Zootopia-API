@@ -54,12 +54,22 @@ def main():
     """loads information from a json file, loads a html template,
     serializes the information, pastes into html and saves file
     """
-    animals_data = load_data("animals_data.json")
-    html_template = load_template("animals_template.html")
+    try:
+        animals_data = load_data("animals_data.json")
+        html_template = load_template("animals_template.html")
+    except FileNotFoundError as e:
+        print(f"File not found: {e}")
+        return
+    except json.JSONDecodeError as e:
+        print(f"File could not be decoded as JSON: {e}")
+        return
+
     animals_html = serialize_output(animals_data)
     html_filled = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
-    save_file("animals.html", html_filled)
 
-
+    try:
+        save_file("animals.html", html_filled)
+    except OSError as e:
+        print(f"Could not save due to OS error: {e}")
 if __name__ == "__main__":
     main()
