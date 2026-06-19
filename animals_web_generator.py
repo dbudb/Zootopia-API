@@ -20,32 +20,34 @@ def save_file(file_path: str, content: str) -> None:
         file.write(content)
 
 
+def serialize_animal(animal: dict[str, Any]) -> str:
+    """returns html for a single animal: name, diet, location, type"""
+    name = animal.get("name")
+    characteristics = animal.get("characteristics", {})
+    diet = characteristics.get("diet")
+    animal_type = characteristics.get("type")
+    locations = animal.get("locations")
+    main_location = locations[0] if locations else None
+
+    output = ""
+    output += "<li class='cards__item'>"
+    output += f"<div class='card__title'>{name}</div>"
+    output += "<p class='card__text'>"
+
+    if diet:
+        output += f"<strong>Diet:</strong> {diet}<br/>"
+    if main_location:
+        output += f"<strong>Location:</strong> {main_location}<br/>"
+    if animal_type:
+        output += f"<strong>Type:</strong> {animal_type}<br/>"
+
+    output += "</p></li>"
+    return output
+
+
 def serialize_output(animals: list[dict[str, Any]]) -> str:
-    """gets list of animal objects and returns html formatted str with only name, diet, location and type per animal"""
-    selected_animal_data = ""
-    for animal in animals:
-        name = animal.get("name")
-        characteristics = animal.get("characteristics", {})
-        diet = characteristics.get("diet")
-        animal_type = characteristics.get("type")
-        locations = animal.get("locations")
-        main_location = locations[0] if locations else None
-
-        selected_animal_data += "<li class='cards__item'>"
-        selected_animal_data += f"<div class='card__title'>{name}</div>"
-        selected_animal_data += "<p class='card__text'>"
-
-        if diet:
-            selected_animal_data += f"<strong>Diet:</strong> {diet}<br/>"
-
-        if main_location:
-            selected_animal_data += f"<strong>Location:</strong> {main_location}<br/>"
-
-        if animal_type:
-            selected_animal_data += f"<strong>Type:</strong> {animal_type}<br/>"
-
-        selected_animal_data += "</p></li>"
-    return selected_animal_data
+    """returns html for all animals"""
+    return "".join(serialize_animal(animal) for animal in animals)
 
 
 def main():
