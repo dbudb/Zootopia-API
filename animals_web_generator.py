@@ -51,6 +51,9 @@ def main():
     """
     try:
         animal_name = input("Enter a name of an animal: ")
+        if not animal_name.strip():
+            print("Please enter an animal name.")
+            return
         animals_data = fetch_data(BASE_URL, animal_name)
         html_template = load_template("animals_template.html")
     except FileNotFoundError as e:

@@ -16,7 +16,10 @@ def fetch_data(url: str, name: str) -> list[dict[str, Any]]:
     """fetches animal data from API"""
     try:
         res = requests.get(url, params={'name': name}, headers=HEADERS)
-        return res.json()
+        data = res.json()
+        if not isinstance(data, list):
+            return []
+        return data
     except requests.exceptions.RequestException as e:
         raise DataFetchError(f"API request failed: {e}")
 
