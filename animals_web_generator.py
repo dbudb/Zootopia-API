@@ -69,13 +69,17 @@ def main():
     serializes the information, pastes into html and saves file
     """
     try:
-        animals_data = fetch_data(BASE_URL, "Fox")
+        animal_name = input("Enter a name of an animal: ")
+        animals_data = fetch_data(BASE_URL, animal_name)
         html_template = load_template("animals_template.html")
     except FileNotFoundError as e:
         print(f"File not found: {e}")
         return
     except json.JSONDecodeError as e:
         print(f"File could not be decoded as JSON: {e}")
+        return
+    except requests.exceptions.RequestException as e:
+        print(f"API request failed: {e}")
         return
 
     animals_html = serialize_output(animals_data)
