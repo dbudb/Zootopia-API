@@ -1,5 +1,19 @@
+import os
 import json
+import requests
 from typing import Any
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY')
+BASE_URL = 'https://api.api-ninjas.com/v1/animals'
+HEADERS = {'X-Api-Key': API_KEY}
+
+def fetch_data(url: str, name: str) -> list[dict[str, Any]]:
+    """fetches animal data from API"""
+    res = requests.get(url, params={'name': name}, headers=HEADERS)
+    return res.json()
 
 
 def load_data(file_path: str) -> list[dict[str, Any]]:
@@ -55,7 +69,7 @@ def main():
     serializes the information, pastes into html and saves file
     """
     try:
-        animals_data = load_data("animals_data.json")
+        animals_data = fetch_data(BASE_URL, "Fox")
         html_template = load_template("animals_template.html")
     except FileNotFoundError as e:
         print(f"File not found: {e}")
