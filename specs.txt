@@ -1,0 +1,21 @@
+Milestone 1
+Your current code reads the animals information from the JSON file and then creates the website.
+Change the code so it fetches the information from the API: search for the animal “Fox” to get the same results.
+
+
+Milestone 2
+Change the program so it first asks the user for an animal name, and then fetches the information about this animals from the API. In other words, the animals in the website will be picked by the user.
+For example, if the user entered "Fox":
+
+$ python3 animals_web_generator.py
+
+Enter a name of an animal: Fox
+Website was successfully generated to the file animals.html.
+The generated website should display all the animals that were returned from the API as a response to the query "Fox".
+If the user enters "Monkey", the website will contain the results from the API about monkeys.
+
+Milestone 3
+What happens when the user enters an animal that doesn’t exist? Change your program so it will generate a nice message in the website for this case.
+For example, if the user entered the animal name "goadohjasgfas", the website would display a message:
+<h2>The animal "goadohjasgfas" doesn't exist.</h2>
+You can format the error message however you want, play with it!
