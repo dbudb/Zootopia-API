@@ -1,26 +1,7 @@
-import os
-import json
-import requests
 from typing import Any
-from dotenv import load_dotenv
+from data_fetcher import fetch_data, DataFetchError
 
-load_dotenv()
-
-API_KEY = os.getenv('API_KEY')
 BASE_URL = 'https://api.api-ninjas.com/v1/animals'
-HEADERS = {'X-Api-Key': API_KEY}
-
-def fetch_data(url: str, name: str) -> list[dict[str, Any]]:
-    """fetches animal data from API"""
-    res = requests.get(url, params={'name': name}, headers=HEADERS)
-    return res.json()
-
-
-def load_data(file_path: str) -> list[dict[str, Any]]:
-    """Loads a JSON file"""
-    with open(file_path, "r", encoding="utf-8") as handle:
-        return json.load(handle)
-
 
 def load_template(file_path: str) -> str:
     """loads a textfile"""
@@ -75,10 +56,7 @@ def main():
     except FileNotFoundError as e:
         print(f"File not found: {e}")
         return
-    except json.JSONDecodeError as e:
-        print(f"File could not be decoded as JSON: {e}")
-        return
-    except requests.exceptions.RequestException as e:
+    except DataFetchError as e:
         print(f"API request failed: {e}")
         return
     if not animals_data:

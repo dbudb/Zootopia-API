@@ -19,3 +19,55 @@ What happens when the user enters an animal that doesn’t exist? Change your pr
 For example, if the user entered the animal name "goadohjasgfas", the website would display a message:
 <h2>The animal "goadohjasgfas" doesn't exist.</h2>
 You can format the error message however you want, play with it!
+
+
+Multi File Program
+Until now, all of your code was stored in a single file. It’s time to support a more complex architecture.
+Logical Parts
+In our program, we have two main parts:
+Data Fetcher - Fetching the data (API / static JSON file).
+Website Generator - Generating the website.
+The data fetcher is not related to the website generation at all, and you can run the data fetcher without generating a website.
+The website generator is a bit more tricky. The website generation depends on the fetched data, of course. It expects a certain format, in our case, a list of animals, where each animal is described with a dictionary in a specific format.
+But the website generator doesn’t care how the data is fetched. The data fetcher can retrieve the data from a JSON file, from Ninja’s API, from another API, or just create fake data.
+As long as the format (list of dictionaries) is consistent, the website generator is agnostic to the data fetcher’s implementation.
+New Architecture
+Data Fetcher
+Create a new file called data_fetcher.py, you can create it in Codio via the file browser. If you code in PyCharm, create it there and then also in Codio. Make sure it’s in the same directory with your original Python file.
+In the data fetcher, create a function:
+
+def fetch_data(animal_name):
+  """
+  Fetches the animals data for the animal 'animal_name'.
+  Returns: a list of animals, each animal is a dictionary:
+  {
+    'name': ...,
+    'taxonomy': {
+      ...
+    },
+    'locations': [
+      ...
+    ],
+    'characteristics': {
+      ...
+    }
+  },
+  """
+  pass
+Implement the function fetch_data, instead of the pass statement, put your code that communicates with the API.
+Website Generator
+The code of the website generator should stay in the file animals_web_generator.py. But now, the website generator shouldn’t fetch the data, but instead it should call the data fetcher.
+First, import at the beginning of your code the module data_fetcher.py:
+
+import data_fetcher
+When you want to fetch the data, just call the function you defined before:
+
+...
+animal_name = input("Please enter an animal: ")
+...
+data = data_fetcher.fetch_data(animal_name)
+Commit reminder
+Commit your changes with a message akin to “new project architecture”. Push your changes to the remote repository.
+Notes
+Remove unused imports. For example, there is no need to import the library requests now in the website generator module, only in the data fetcher module.
+Define your constants correctly. For example, the API key should be defined as a constant (e.g. API_KEY = '...') at the beginning of your module, in the data fetcher module.
