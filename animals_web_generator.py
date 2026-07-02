@@ -81,8 +81,10 @@ def main():
     except requests.exceptions.RequestException as e:
         print(f"API request failed: {e}")
         return
-
-    animals_html = serialize_output(animals_data)
+    if not animals_data:
+        animals_html = f"<h2>The animal \"{animal_name}\" doesn't exist.</h2>"
+    else:
+        animals_html = serialize_output(animals_data)
     html_filled = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_html)
 
     try:
